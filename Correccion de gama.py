@@ -22,10 +22,10 @@ cv2.waitKey(0)
 
 #############              CMYK             #########################
 
-#cv2 is used for OpenCV library
+
 image = cv2.imread('IMG.jpg')
 
-#imread is use to read an image from a location
+
 
 img = image.astype(np.float64)/255.
 K = 1 - np.max(img, axis=2)
@@ -47,18 +47,25 @@ B = img[:,:,0]
 G = img[:,:,1]
 R = img[:,:,2]
 
-CMY = (1-B)+(1-G)+(1-R)
-CMY = CMY.astype(np.uint8)
-cv2.imshow('CMY',CMY)
+
+C=(1-(R/255))
+M=(1-(G/255))
+Y=(1-(B/255))
+negra=np.zeros(img.shape[:2],dtype='uint8')
+cv2.imshow('C', cv2.merge([B,G,negra]))
+cv2.imshow('M', cv2.merge ([B,negra,R]))
+cv2.imshow('Y', cv2.merge([negra,G,R]))
+cv2.imshow('CMY', cv2.merge([Y,M,C]))
+CMY=cv2.merge([Y,M,C])
 cv2.waitKey(0)
 
 #############              HSI             #########################
 
 img = cv2.imread('IMG.jpg')
 hsi = HSI.RGB_TO_HSI(img)
-# Display HSV Image
+
 cv2.imshow('HSI', hsi)
-# The three value channels
+
 cv2.imshow('HSI H Channel', hsi[:, :, 0])
 cv2.imshow('HSI S Channel', hsi[:, :, 1])
 cv2.imshow('HSI I Channel', hsi[:, :, 2])
